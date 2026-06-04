@@ -7,21 +7,19 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="page-container";background-color:blue;font-family: Geneva;>
+    <div class="page-container">
 
-      <!-- Page Title -->
       <h2 class="page-title">{{ title }}</h2>
 
-      <!-- Empty state message -->
       <div *ngIf="tips.length === 0" class="empty-state">
         No {{ title.toLowerCase() }} yet
       </div>
 
-      <!-- Cards container -->
       <div class="cards-container">
         <div *ngFor="let tip of tips" class="card">
           <h3>{{ tip.topic }}</h3>
           <p>{{ tip.text }}</p>
+
           <div *ngIf="tip.studentId || tip.date" class="card-footer">
             <span *ngIf="tip.studentId">Student: {{ tip.studentId }}</span>
             <span *ngIf="tip.date"> | Date: {{ tip.date }}</span>
@@ -43,8 +41,7 @@ import { CommonModule } from '@angular/common';
       margin-bottom: 25px;
       color: #efe7e7;
       font-family: Geneva;
-       font-size: 28px;
-      
+      font-size: 28px;
     }
 
     .empty-state {
@@ -61,7 +58,6 @@ import { CommonModule } from '@angular/common';
       max-height: 75vh;
       overflow-y: auto;
       padding-bottom: 10px;
-      
     }
 
     .card {
@@ -72,7 +68,6 @@ import { CommonModule } from '@angular/common';
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       flex-shrink: 0;
       text-align: left;
-      
     }
 
     .card h3 {
@@ -97,10 +92,13 @@ export class ApprovedTipsComponent implements OnInit {
   title = "Approved Tips";
   tips: any[] = [];
 
+  // ✅ FIXED: Render backend URL
+  private backendUrl = "https://peerstudyhub-backend.onrender.com";
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<any[]>("http://127.0.0.1:5000/approved")
+    this.http.get<any[]>(`${this.backendUrl}/approved`)
       .subscribe(
         data => {
           this.tips = data.filter(tip => tip !== null);

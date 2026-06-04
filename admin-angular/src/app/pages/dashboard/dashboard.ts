@@ -41,14 +41,14 @@ import { CommonModule } from '@angular/common';
       padding: 20px;
       text-align: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #bdd2ec;
+      background-color: #bdd2ec;
     }
 
     .page-title {
       color: #010b15;
       margin-bottom: 25px;
       font-size: 28px;
-         font-family:Geneva;
+      font-family: Geneva;
     }
 
     .quick-actions {
@@ -85,10 +85,9 @@ import { CommonModule } from '@angular/common';
       width: 250px;
       padding: 20px;
       border-radius: 10px;
-      background: #f8f9fa;
+      background-color: #9ac5f4;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       text-align: center;
-         background-color: #9ac5f4;
     }
 
     .card h3 {
@@ -108,8 +107,8 @@ export class DashboardComponent implements OnInit {
   pendingCount = 0;
   approvedCount = 0;
 
-  // Backend URL
-  backendUrl = "http://127.0.0.1:5000";
+  // ✅ FIXED: Render backend URL
+  backendUrl = "https://peerstudyhub-backend.onrender.com";
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -122,13 +121,13 @@ export class DashboardComponent implements OnInit {
   }
 
   loadCounts() {
-    // Fetch Pending Tips
+    // Pending tips
     this.http.get<any[]>(`${this.backendUrl}/pending`)
       .subscribe(data => {
         this.pendingCount = data.filter(t => t !== null).length;
       }, err => console.error("Error loading pending tips:", err));
 
-    // Fetch Approved Tips
+    // Approved tips
     this.http.get<any[]>(`${this.backendUrl}/approved`)
       .subscribe(data => {
         this.approvedCount = data.filter(t => t !== null).length;

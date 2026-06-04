@@ -9,15 +9,12 @@ import { CommonModule } from '@angular/common';
   template: `
     <div class="page-container">
 
-      <!-- Page Title -->
       <h2 class="page-title">{{ title }}</h2>
 
-      <!-- Empty State -->
       <div *ngIf="tips.length === 0" class="empty-state">
         No tips found
       </div>
 
-      <!-- Cards Container -->
       <div class="cards-container">
         <div *ngFor="let tip of tips" class="card">
           <h3>{{ tip.topic || 'No Topic' }}</h3>
@@ -43,7 +40,7 @@ import { CommonModule } from '@angular/common';
     .page-title {
       margin-bottom: 25px;
       color: #031c37;
-       font-family: Geneva;
+      font-family: Geneva;
     }
 
     .empty-state {
@@ -90,8 +87,7 @@ import { CommonModule } from '@angular/common';
 
     .card-actions button {
       padding: 8px 12px;
-      background: #90c3fa;
-      background-color:rgb(85, 110, 222);
+      background-color: rgb(85, 110, 222);
       color: white;
       border: none;
       border-radius: 6px;
@@ -111,6 +107,9 @@ export class PendingTips implements OnInit {
 
   tips: any[] = [];
 
+  // ✅ YOUR LIVE BACKEND URL
+  private BASE_URL = "https://peerstudyhub-backend.onrender.com";
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -118,15 +117,15 @@ export class PendingTips implements OnInit {
   }
 
   loadTips() {
-    this.http.get<any[]>("http://127.0.0.1:5000/pending")
+    this.http.get<any[]>(`${this.BASE_URL}/pending`)
       .subscribe(data => {
         console.log("DATA RECEIVED:", data);
-        this.tips = data.filter(t => t !== null); // filter nulls
+        this.tips = data.filter(t => t !== null);
       });
   }
 
   approveTip(id: number) {
-    this.http.post(`http://127.0.0.1:5000/approve/${id}`, {})
+    this.http.post(`${this.BASE_URL}/approve/${id}`, {})
       .subscribe(() => {
         alert("Approved!");
         this.loadTips();
@@ -134,7 +133,7 @@ export class PendingTips implements OnInit {
   }
 
   deleteTip(id: number) {
-    this.http.delete(`http://127.0.0.1:5000/delete/${id}`)
+    this.http.delete(`${this.BASE_URL}/delete/${id}`)
       .subscribe(() => {
         alert("Deleted!");
         this.loadTips();

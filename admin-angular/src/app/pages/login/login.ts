@@ -7,18 +7,52 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   template: `
-    <div style="text-align:center; margin-top:100px; font-family: Geneva;color: #051e38;background-color: #c4ddf8;">
+    <div class="login-container">
       <h2>Admin Login</h2>
-      <input placeholder="Username" [(ngModel)]="username" style="margin:10px; padding:8px;">
-      <br>
-      <input type="password" placeholder="Password" [(ngModel)]="password" style="margin:10px; padding:8px;">
-      <br>
-      <button (click)="login()" style="padding:8px 15px; background:#007bff; color:white; border:none;background-color: #11365e;">
+
+      <input
+        placeholder="Username"
+        [(ngModel)]="username"
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+      />
+
+      <button (click)="login()">
         Login
       </button>
-     
     </div>
-  `
+  `,
+  styles: [`
+    .login-container {
+      text-align: center;
+      margin-top: 100px;
+      font-family: Geneva;
+      background-color: #c4ddf8;
+      color: #051e38;
+      padding: 40px;
+    }
+
+    input {
+      margin: 10px;
+      padding: 8px;
+    }
+
+    button {
+      padding: 8px 15px;
+      background-color: #11365e;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0a223b;
+    }
+  `]
 })
 export class LoginComponent {
   username = '';
@@ -28,14 +62,15 @@ export class LoginComponent {
 
   login() {
     if (this.username === 'admin' && this.password === 'admin') {
-      // Save login session
       localStorage.setItem('adminLoggedIn', 'true');
-      this.router.navigate(['/pending']); // go to Pending Tips after login
+      this.router.navigate(['/pending']);
     } else {
       alert('Invalid login');
     }
   }
 }
+
+// ✅ AUTH CHECK (keep as guard helper)
 export function isLoggedIn() {
   return localStorage.getItem('adminLoggedIn') === 'true';
 }
