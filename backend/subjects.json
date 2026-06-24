@@ -1,0 +1,8 @@
+[
+  {
+    "id": 1,
+    "semester": 3,
+    "subject": "Object Oriented Programming",
+    "topics": ["Classes", "Objects", "Constructors"]
+  }
+]
