@@ -326,6 +326,7 @@ function Dashboard() {
         >
           View Approved Tips
         </button>
+<<<<<<< HEAD
 
         <button
           onClick={() => navigate("/submit")}
@@ -333,6 +334,8 @@ function Dashboard() {
         >
           Submit Tip
         </button>
+=======
+>>>>>>> 7a4c5d339b264ecf2fe4cfc93e7fd2e5df5441a2
       </div>
 
       {subjects.length === 0 ? (
